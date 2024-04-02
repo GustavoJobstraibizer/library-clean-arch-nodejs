@@ -6,4 +6,5 @@ module.exports = class AppError extends Error {
   }
 
   static dependencyError = 'Dependency must be provided';
+  static requiredFieldError = 'Required fields';
 };
