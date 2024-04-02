@@ -3,11 +3,13 @@
 > Somos uma empresa pequena e gostariamos de controlar a nossa entrada e saída de livros. Queremos cadastrar o usuário que irá pegar o livro emprestado, cadastrar os livros da nossa biblioteca e poder emprestar os livros para qualquer usuário, além de buscar os registros de empréstimos.
 
 ## Dados
+
 - Usuario: [nome_completo, CPF, telefone, endereco, email]
 - Livro: [nome, quantidade, autor, genero, ISBN]
 - Emprestimo: [usuario_id, livro_id, data_retorno, data_devolucao, data_saida]
 
 ## UseCases (Regras de negócio)
+
 [] Cadastrar um novo usuário
 [] - CPF ou email devem ser únicos
 
@@ -30,3 +32,11 @@
 [] - Caso o usuário tenha atrasado, será gerada uma multa fixa de R$10,00
 
 [] - Mostrar todos os empréstimos pendentes, com o nome do livro, nome do usuário, CPF, data de saída e data de retorno. Ordenados pela data de retorno mais antiga.
+
+## Estruturas
+
+### UsuarioRepository
+
+[] Cadastrar: ({ nome_completo, CPF, telefone, endereco, email }) => Promise<void>
+[] BuscarPorCPF: (CPF) => Usuario
+[] BuscarPorEmail: (email) => Usuario
