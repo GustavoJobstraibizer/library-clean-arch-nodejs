@@ -12,3 +12,8 @@ TripleAAA, que também é conhecido como AAA, é um padrão de design de testes 
 - **Arrange**: Preparar o ambiente de teste, configurando os objetos e definindo o estado inicial.
 - **Act**: Executar o código que será testado.
 - **Assert**: Verificar se o resultado do teste é o esperado.
+
+### O que é Either?
+
+Either é um tipo de dados que representa um valor que pode ser de dois tipos diferentes: Left ou Right. Ele é comumente utilizado para representar um resultado que pode ser um sucesso ou um erro.
+Onde Left é utilizado para representar um erro e Right é utilizado para representar sucesso.
