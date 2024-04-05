@@ -1,8 +1,9 @@
-const AppError = require('../shared/errors/AppError');
+const ValidationTranslationKeys = require('../shared/errors/ValidationTranslationKeys');
+const { AppError, Either } = require('../shared/errors');
 
 module.exports = function cadastrarUsuario({ usuarioRepository }) {
   if (!usuarioRepository) {
-    throw new AppError(AppError.dependencyError);
+    throw new AppError(ValidationTranslationKeys.DEPENDENCY_ERROR);
   }
 
   return async function ({ nome_completo, CPF, telefone, endereco, email }) {
@@ -10,7 +11,19 @@ module.exports = function cadastrarUsuario({ usuarioRepository }) {
       nome_completo && CPF && telefone && endereco && email;
 
     if (!validateRequiredFields) {
-      throw new AppError(AppError.requiredFieldError);
+      return Either.left('Campos obrigatórios não informados');
+    }
+
+    const isCPFAlreadyExists = await usuarioRepository.existePorCPF(CPF);
+
+    if (isCPFAlreadyExists) {
+      return Either.left('CPF já cadastrado');
+    }
+
+    const isEmailAlreadyExists = await usuarioRepository.existerPorEmail(email);
+
+    if (isEmailAlreadyExists) {
+      return Either.left('E-mail já cadastrado');
     }
 
     await usuarioRepository.cadastrar({
@@ -20,5 +33,7 @@ module.exports = function cadastrarUsuario({ usuarioRepository }) {
       endereco,
       email,
     });
+
+    return Either.right(null);
   };
 };
