@@ -4,7 +4,4 @@ module.exports = class AppError extends Error {
     this.message = message;
     this.statusCode = statusCode;
   }
-
-  static dependencyError = 'Dependency must be provided';
-  static requiredFieldError = 'Required fields';
 };
