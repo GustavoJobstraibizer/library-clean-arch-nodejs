@@ -10,33 +10,48 @@
 
 ## UseCases (Regras de negócio)
 
-[] Cadastrar um novo usuário
-[] - CPF ou email devem ser únicos
+[x] Cadastrar um novo usuário
+[x] - CPF e email devem ser únicos
 
-[] Buscar um cadastro de usuário por CPF
-[] - Retornar um usuário ou vazio
+[x] Buscar um cadastro de usuário por CPF
+[x] - Retornar um usuário ou vazio
 
-[] Cadastrar um novo livro
-[] - ISBN deve ser único
+[x] Cadastrar um novo livro
+[x] - ISBN deve ser único
 
-[] Buscar um livro por nome ou ISBN
-[] - Retornar os livros por ISBN
+[x] Buscar um livro por nome ou ISBN
+[x] - Retornar os livros ou um array vazio
 
-[] Emprestar um livro ao usuário
-[] - A data de retorno não pode ser menor que a data de saída
-[] - Um usuário não pode estar com mais de um livro com o mesmo ISBN ao mesmo tempo
-[] - Um usuário pode estar com mais de um livro com ISBN diferentes ao mesmo tempo
-[] - Ao cadastrar um empréstimo, será enviado um email automaticamente informando o nome do livro, nome do usuário, CPF, a data de saída e a data de retorno
+[x] Emprestar um livro ao usuário
+[x] - A data de retorno não pode ser menor que a data de saída
+[x] - Um usuário não pode estar com mais de um livro com o mesmo ISBN ao mesmo tempo
+[x] - Um usuário pode estar com mais de um livro com ISBN diferentes ao mesmo tempo
+[x] - Ao cadastrar um empréstimo, será enviado um email automaticamente informando o nome do livro, nome do usuário, CPF, a data de saída e a data de retorno
 
-[] Devolver o livro emprestado
-[] - Caso o usuário tenha atrasado, será gerada uma multa fixa de R$10,00
+[x] Devolver o livro emprestado
+[x] - Caso o usuário tenha atrasado, será gerada uma multa fixa de R$10,00
 
-[] - Mostrar todos os empréstimos pendentes, com o nome do livro, nome do usuário, CPF, data de saída e data de retorno. Ordenados pela data de retorno mais antiga.
+[x] - Mostrar todos os empréstimos pendentes, com o nome do livro, nome do usuário, CPF, data de saída e data de retorno. Ordenados pela data de retorno mais antiga.
 
 ## Estruturas
 
 ### UsuarioRepository
 
-[] Cadastrar: ({ nome_completo, CPF, telefone, endereco, email }) => Promise<void>
-[] BuscarPorCPF: (CPF) => Usuario
-[] BuscarPorEmail: (email) => Usuario
+[x] cadastrar: ({ nome_completo, CPF, telefone, endereco, email }) => Promise<void>
+[x] buscarPorCPF: (CPF) => Promise<Usuario>
+[x] existePorCPF: (CPF) => Promise<boolean>
+[x] existerPorEmail: (email) => Promise<boolean>
+
+### livroRepository
+
+[x] cadastrar: ({ nome, quantidade, autor, genero, ISBN }) => Promise<void>
+[x] existePorISBN: (ISBN) => Promise<boolean>
+[x] buscarPorNomeOuISBN: (valor) => Promise<Array<Livro>>
+
+### EmprestimoRepository
+
+[x] emprestar: ({ usuario_id, livro_id, data_retorno, data_saida }) => Promise<void>
+[x] devolver: (emprestimo_id, data_devolucao) => Promise<string>
+[x] buscarPorLivroEmprestadoPendenteUsuario: (usuario_id, livro_id) => Promise<boolean>
+[x] buscarPorID: (id) => Promise<Emprestimo & { Livro: {nome}, Usuario: {nome_completo, CPF, email} }>
+[x] buscarPendentes: () => Promise<Array<Emprestimo: {data_saida, data_retorno, Livro: {nome}, Usuario: {nome_completo, CPF} }>>
