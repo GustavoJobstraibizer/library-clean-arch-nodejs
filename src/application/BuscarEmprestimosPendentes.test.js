@@ -1,6 +1,7 @@
 const { AppError } = require('../shared/errors');
 const buscarEmprestimosPendentes = require('./BuscarEmprestimosPendentes');
 const ValidationTranslationKeys = require('../shared/errors/ValidationTranslationKeys');
+const emprestimosPendentes = require('../../tests/__mocks__/emprestimos-pendentes');
 
 describe('BuscarEmprestimosPendentes UseCase', () => {
   const emprestimoRepository = {
@@ -14,27 +15,14 @@ describe('BuscarEmprestimosPendentes UseCase', () => {
   });
 
   it('deve retornar um lista com os emprestimos pendentes', async () => {
-    const emprestimos = [
-      {
-        usuario: { nome: 'Teste', CPF: '123456789-00' },
-        livro: { nome: 'Livro 1' },
-        data_saida: '2024-01-10',
-        data_retorno: '2024-01-17',
-      },
-      {
-        usuario: { nome: 'Teste 2', CPF: '123456789-01' },
-        livro: { nome: 'Livro 2' },
-        data_saida: '2024-01-12',
-        data_retorno: '2024-01-20',
-      },
-    ];
-
-    emprestimoRepository.buscarPendentes.mockResolvedValue(emprestimos);
+    emprestimoRepository.buscarPendentes.mockResolvedValue(
+      emprestimosPendentes,
+    );
 
     const sut = buscarEmprestimosPendentes({ emprestimoRepository });
     const output = await sut();
 
-    expect(output.right).toEqual(emprestimos);
+    expect(output.right).toEqual(emprestimosPendentes);
     expect(output.right).toHaveLength(2);
     expect(emprestimoRepository.buscarPendentes).toHaveBeenCalledTimes(1);
 
