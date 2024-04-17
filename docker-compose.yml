@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  pg:
+    image: 'bitnami/postgresql'
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=postgres
+      - POSTGRESQL_DATABASE=biblioteca_test
+    volumes:
+      - ./.tmp:/var/tmp
+      - db-data:/var/lib/postgresql/data:rw
+
+volumes:
+  db-data:
